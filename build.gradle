@@ -10,7 +10,11 @@ tasks.withType (JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-
+dependencies {
+    testImplementation (
+            "org.junit.jupiter:unit-jupiter:5.8.2"
+    )
+}
 
 
 help {
