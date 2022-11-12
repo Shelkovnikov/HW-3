@@ -1,0 +1,35 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType (JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+
+
+
+help {
+    doFirst {
+        println ""
+        println "************************************************************************ "
+        println "***                                                                  *** "
+        println "*** Welcome to https://github.com/wikipedia-qa/wikipedia-selenide!   *** "
+        println "***                                                                  *** "
+        println "*** Requirements for mobile tests:                                   *** "
+        println "*** - start appium server locally                                    *** "
+        println "*** - install XCode with iPhone Simulators                           *** "
+        println "***                                                                  *** "
+        println "*** You can run tests by one of the following commands:              *** "
+        println "*** ./gradlew android                                                *** "
+        println "*** ./gradlew ios                                                    *** "
+        println "*** ./gradlew web                                                    *** "
+        println "***                                                                  *** "
+        println "************************************************************************ "
+        println ""
+    }
+}
