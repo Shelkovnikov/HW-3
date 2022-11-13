@@ -7,8 +7,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.*;
 
 public class TextBoxTests {
 
@@ -21,14 +21,22 @@ public class TextBoxTests {
 @Test
 
     void fillFormTest () {
+
         open("https://demoqa.com/automation-practice-form");
-        open("https://demoqa.com/automation-practice-form");
-        $("#firstName").setValue("qwe1");
-        $("#lastName").setValue("qwe2");
+
+        executeJavaScript("$('footer').remove()");
+        executeJavaScript("$('#fixedban').remove()");
+
+        $("#firstName").setValue("Dmitry");
+        $("#lastName").setValue("Shelkovnikov");
         $("#userEmail").setValue("qwe3@mail.com");
         $("#gender-radio-3").parent().click();
         $("#userNumber").setValue("1234567899");
-
+        $("#dateOfBirthInput").click();
+        $(".react-datepicker__month-select").selectOption("May");
+        $(".react-datepicker__year-select").click();
+        $(".react-datepicker__year-select").selectOption("1997");
+        $(".react-datepicker__day--020").click();
         $("#subjectsInput").setValue("English");
         $("#subjectsInput").pressEnter();
         $("#hobbies-checkbox-1").parent().click();
@@ -41,9 +49,17 @@ public class TextBoxTests {
         $("#submit").click();
 
 
-
-
-
+        $(".modal-content").shouldHave(text("Thanks for submitting the form"));
+        $(".table-responsive").shouldHave(
+                text("Dmitry Shelkovnikov"),
+                text("qwe3@mail.com"),
+                text("Other"),
+                text("1234567899"),
+                text("English"),
+                text("Sports"),
+                text("Photo.jpg"),
+                text("Miami/HomeBRB"),
+                text("NCR Delhi"));
 
     }
 }
