@@ -18,9 +18,8 @@ public class TextBoxTests {
         Configuration.browserSize = "1920x1080";
     }
 
-@Test
-
-    void fillFormTest () {
+    @Test
+    void fillFormTest() {
 
         open("https://demoqa.com/automation-practice-form");
 
@@ -40,7 +39,7 @@ public class TextBoxTests {
         $("#subjectsInput").setValue("English");
         $("#subjectsInput").pressEnter();
         $("#hobbies-checkbox-1").parent().click();
-        $("#uploadPicture").uploadFile(new File("Files/Photo.jpg"));
+        $("#uploadPicture").uploadFile(new File("src/test/resources/Photo.jpg"));
         $("#currentAddress").setValue("Miami/HomeBRB");
         $("#react-select-3-input").setValue("NCR");
         $("#react-select-3-input").pressEnter();
