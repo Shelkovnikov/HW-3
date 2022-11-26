@@ -1,41 +1,32 @@
-import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.BeforeAll;
+import Tests.TestBase;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
+import pages.RegistrationPage;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
+
 import java.io.File;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
-public class TextBoxTests {
+public class TextBoxTests extends TestBase {
 
-    @BeforeAll
-    static void beforeAll() {
-        Configuration.holdBrowserOpen = true;
-        Configuration.browserSize = "1920x1080";
-    }
 
     @Test
     void fillFormTest() {
+        String userName = "Dmitry";
 
-        open("https://demoqa.com/automation-practice-form");
+        registrationPage.openPage()
+                .setFirstName(userName)
+                .setLastName("Shelkovnikov")
+                .setEmail("qwe3@mail.com")
+                .setNumber("1234567899")
+                .setBirthDate("20","may", "1997");
 
-        executeJavaScript("$('footer').remove()");
-        executeJavaScript("$('#fixedban').remove()");
 
-        $("#firstName").setValue("Dmitry");
-        $("#lastName").setValue("Shelkovnikov");
-        $("#userEmail").setValue("qwe3@mail.com");
+
         $("#gender-radio-3").parent().click();
         $("#userNumber").setValue("1234567899");
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__month-select").selectOption("May");
-        $(".react-datepicker__year-select").click();
-        $(".react-datepicker__year-select").selectOption("1997");
-        $(".react-datepicker__day--020").click();
+
         $("#subjectsInput").setValue("English");
         $("#subjectsInput").pressEnter();
         $("#hobbies-checkbox-1").parent().click();
@@ -47,8 +38,15 @@ public class TextBoxTests {
         $("#react-select-4-input").pressEnter();
         $("#submit").click();
 
+        registrationPage.verifyResultsModal()
+                .verifyResult("Student Name", userName + "Shelkovnikov")
+                .verifyResult("Student Email", "qwe3@mail.com")
+                .verifyResult("Gender",  "Other")
+                .verifyResult("Date of Birth", "20 May 1997")
+        ;
 
-        $(".modal-content").shouldHave(text("Thanks for submitting the form"));
+
+
         $(".table-responsive").shouldHave(
                 text("Dmitry Shelkovnikov"),
                 text("qwe3@mail.com"),
