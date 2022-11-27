@@ -1,12 +1,6 @@
 import Tests.TestBase;
 import org.junit.jupiter.api.Test;
-import pages.RegistrationPage;
 
-
-import java.io.File;
-
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.*;
 
 public class TextBoxTests extends TestBase {
 
@@ -14,49 +8,50 @@ public class TextBoxTests extends TestBase {
     @Test
     void fillFormTest() {
         String userName = "Dmitry";
+        String LastName = "Shelkovnikov";
+        String Email = "qwe3@mail.com";
+        String Number = "1234567899";
+        String BirthDay = ("30");
+        String BirthMonth = ("May");
+        String BirthYear = ("2008");
+        String Gender = "Male";
+        String Subject = "English";
+        String Hobbies = "Sports";
+        String FileUpload = "Photo.jpg";
+        String currentAdress = "Miami/HomeBRB";
+        String state = "NCR";
+        String city = "Delhi";
+
 
         registrationPage.openPage()
                 .setFirstName(userName)
-                .setLastName("Shelkovnikov")
-                .setEmail("qwe3@mail.com")
-                .setNumber("1234567899")
-                .setBirthDate("20","may", "1997");
+                .setLastName(LastName)
+                .setEmail(Email)
+                .setNumber(Number)
+                .setBirthDate(BirthDay, BirthMonth, BirthYear)
+                .genderClick(Gender)
+                .subjectSet(Subject)
+                .hobbbiesClick(Hobbies)
+                .fileUpload(FileUpload)
+                .currentAdressSet(currentAdress)
+                .stateSet(state)
+                .citySet(city)
+                .submitClick();
 
-
-
-        $("#gender-radio-3").parent().click();
-        $("#userNumber").setValue("1234567899");
-
-        $("#subjectsInput").setValue("English");
-        $("#subjectsInput").pressEnter();
-        $("#hobbies-checkbox-1").parent().click();
-        $("#uploadPicture").uploadFile(new File("src/test/resources/Photo.jpg"));
-        $("#currentAddress").setValue("Miami/HomeBRB");
-        $("#react-select-3-input").setValue("NCR");
-        $("#react-select-3-input").pressEnter();
-        $("#react-select-4-input").setValue("Delhi");
-        $("#react-select-4-input").pressEnter();
-        $("#submit").click();
 
         registrationPage.verifyResultsModal()
-                .verifyResult("Student Name", userName + "Shelkovnikov")
-                .verifyResult("Student Email", "qwe3@mail.com")
-                .verifyResult("Gender",  "Other")
-                .verifyResult("Date of Birth", "20 May 1997")
+                .verifyResult("Student Name", userName + " " + LastName)
+                .verifyResult("Student Email", Email)
+                .verifyResult("Gender", Gender)
+                .verifyResult("Date of Birth", BirthDay + " " + BirthMonth + "," + BirthYear)
+                .verifyResult("Mobile", Number)
+                .verifyResult("Subjects", Subject)
+                .verifyResult("Hobbies", Hobbies)
+                .verifyResult("Picture", FileUpload)
+                .verifyResult("Address", currentAdress)
+                .verifyResult("State and City", state + " " + city)
         ;
 
-
-
-        $(".table-responsive").shouldHave(
-                text("Dmitry Shelkovnikov"),
-                text("qwe3@mail.com"),
-                text("Other"),
-                text("1234567899"),
-                text("English"),
-                text("Sports"),
-                text("Photo.jpg"),
-                text("Miami/HomeBRB"),
-                text("NCR Delhi"));
 
     }
 }

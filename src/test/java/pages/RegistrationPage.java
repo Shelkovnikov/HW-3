@@ -3,11 +3,15 @@ package pages;
 import pages.components.CalendarComponent;
 import pages.components.RegistrationResultsModal;
 
+import java.io.File;
+
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class RegistrationPage {
     CalendarComponent calendarComponent = new CalendarComponent();
     RegistrationResultsModal registrationResultsModal = new RegistrationResultsModal();
+
 
     public RegistrationPage openPage() {
         open("https://demoqa.com/automation-practice-form");
@@ -43,8 +47,7 @@ public class RegistrationPage {
 
     public RegistrationPage setBirthDate(String day, String month, String year) {
         $("#dateOfBirthInput").click();
-        calendarComponent.setDay(day, month, year);
-
+        calendarComponent.setDate(day, month, year);
         return this;
     }
 
@@ -58,8 +61,60 @@ public class RegistrationPage {
         registrationResultsModal.verifyResult(key, value);
 
 
+        return this;
+    }
+
+    public RegistrationPage genderClick(String value) {
+        $("#genterWrapper").$(byText(value)).click();
 
         return this;
     }
 
+    public RegistrationPage subjectSet(String value) {
+        $("#subjectsInput").setValue(value);
+        $("#subjectsInput").pressEnter();
+
+        return this;
+    }
+
+
+    public RegistrationPage hobbbiesClick(String value) {
+        $("#hobbiesWrapper").$(byText(value)).click();
+
+        return this;
+    }
+
+    public RegistrationPage fileUpload(String value) {
+        $("#uploadPicture").uploadFile(new File("src/test/resources/" + value));
+
+        return this;
+    }
+
+    public RegistrationPage currentAdressSet(String value) {
+        $("#currentAddress").setValue(value);
+
+        return this;
+    }
+
+    public RegistrationPage stateSet(String value) {
+        $("#react-select-3-input").setValue(value);
+        $("#react-select-3-input").pressEnter();
+
+        return this;
+    }
+
+    public RegistrationPage citySet(String value) {
+        $("#react-select-4-input").setValue(value);
+        $("#react-select-4-input").pressEnter();
+
+        return this;
+    }
+
+    public RegistrationPage submitClick() {
+        $("#submit").click();
+
+        return this;
+    }
 }
+
+
